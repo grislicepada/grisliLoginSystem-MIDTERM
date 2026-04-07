@@ -1,9 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package my_package;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Acer
@@ -39,6 +38,7 @@ public class RegisterForm extends javax.swing.JFrame {
         userName_fld.addActionListener(this::userName_fldActionPerformed);
 
         registerBtn.setText("Register");
+        registerBtn.addActionListener(this::registerBtnActionPerformed);
 
         userName_lbl.setText("Username:");
 
@@ -85,6 +85,34 @@ public class RegisterForm extends javax.swing.JFrame {
     private void userName_fldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userName_fldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userName_fldActionPerformed
+
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+       String user = userName_fld.getText();
+       String pass = new String(pass_fld.getPassword());
+       
+       if (user.isEmpty()|| pass.isEmpty()){
+           JOptionPane.showMessageDialog(this, "Please fill all fields!");
+           return;
+       }
+       try{
+           Connection con = DBConnection.getConnection();
+           String sql = "INSERT INTO users (username, password) VALUES(?, ?)";
+           PreparedStatement pst = con.prepareStatement(sql);
+           
+           pst.setString(1, user);
+           pst.setString(2, user);
+           
+           pst.executeUpdate();
+           
+           JOptionPane.showMessageDialog(this, "Registration Successful!");
+           
+           userName_fld.setText("");
+           pass_fld.setText("");
+       } catch (Exception e){
+           JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+       }
+// TODO add your handling code here:
+    }//GEN-LAST:event_registerBtnActionPerformed
 
     /**
      * @param args the command line arguments
