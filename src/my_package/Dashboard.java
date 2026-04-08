@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my_package;
-
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Acer
@@ -33,6 +33,9 @@ public class Dashboard extends javax.swing.JFrame {
         update_btn = new javax.swing.JButton();
         delete_btn = new javax.swing.JButton();
         logout_btn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        userTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,21 +56,38 @@ public class Dashboard extends javax.swing.JFrame {
 
         logout_btn.setText("Logout");
 
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(userTable);
+
+        jScrollPane2.setViewportView(jScrollPane1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
-                .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
-                .addGap(180, 180, 180)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(441, 441, 441))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(68, 68, 68)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(logout_btn)
                     .addComponent(delete_btn)
                     .addComponent(update_btn)
                     .addComponent(add_btn))
+                .addGap(91, 91, 91)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -75,15 +95,20 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(add_btn)
-                .addGap(18, 18, 18)
-                .addComponent(update_btn)
-                .addGap(18, 18, 18)
-                .addComponent(delete_btn)
-                .addGap(18, 18, 18)
-                .addComponent(logout_btn)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(add_btn)
+                        .addGap(18, 18, 18)
+                        .addComponent(update_btn)
+                        .addGap(18, 18, 18)
+                        .addComponent(delete_btn)
+                        .addGap(18, 18, 18)
+                        .addComponent(logout_btn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
@@ -96,7 +121,27 @@ public class Dashboard extends javax.swing.JFrame {
     private void update_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_btnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_update_btnActionPerformed
-
+    private void loadTableData(){
+        DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+        model.setRowCount(0);
+        
+        try{
+            java.sql.Connection conn = DBConnection.getConnection();
+            String sql = "SELECT id, username, password FROM users";
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs = pst.executeQuery();
+                    
+            while(rs.next()){
+                model.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("username"),
+                    rs.getString("password")
+                });
+            }
+            }catch (Exception e){
+                javax.swing.JOptionPane.showMessageDialog(this, "Error loading table: " + e.getMessage());
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -117,7 +162,7 @@ public class Dashboard extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Dashboard().setVisible(true));
     }
@@ -125,8 +170,11 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_btn;
     private javax.swing.JButton delete_btn;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logout_btn;
     private javax.swing.JButton update_btn;
+    private javax.swing.JTable userTable;
     private javax.swing.JLabel welcome_lbl;
     // End of variables declaration//GEN-END:variables
 }
