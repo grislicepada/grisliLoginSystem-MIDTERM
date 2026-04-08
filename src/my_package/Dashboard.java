@@ -19,6 +19,8 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard() {
         initComponents();
         loadTableData();
+        this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(new java.awt.Color(34,34,34));
     }
 
     /**
@@ -38,11 +40,15 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
+        txt_username = new javax.swing.JTextField();
+        txt_password = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(34, 34, 34));
 
         welcome_lbl.setBackground(new java.awt.Color(0, 255, 255));
-        welcome_lbl.setFont(new java.awt.Font("Engravers MT", 2, 36)); // NOI18N
+        welcome_lbl.setFont(new java.awt.Font("Trebuchet MS", 1, 48)); // NOI18N
+        welcome_lbl.setForeground(new java.awt.Color(255, 255, 255));
         welcome_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         welcome_lbl.setText("WELCOME!");
         welcome_lbl.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -58,71 +64,145 @@ public class Dashboard extends javax.swing.JFrame {
         delete_btn.addActionListener(this::delete_btnActionPerformed);
 
         logout_btn.setText("Logout");
+        logout_btn.addActionListener(this::logout_btnActionPerformed);
 
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "User Name", "Password"
             }
         ));
+        userTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(userTable);
+        if (userTable.getColumnModel().getColumnCount() > 0) {
+            userTable.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         jScrollPane2.setViewportView(jScrollPane1);
+
+        txt_username.addActionListener(this::txt_usernameActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(441, 441, 441))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(logout_btn)
-                    .addComponent(delete_btn)
-                    .addComponent(update_btn)
-                    .addComponent(add_btn))
-                .addGap(91, 91, 91)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_username, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                            .addComponent(txt_password))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(add_btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(update_btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(delete_btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(logout_btn))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(201, 201, 201)
+                        .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(add_btn)
-                        .addGap(18, 18, 18)
-                        .addComponent(update_btn)
-                        .addGap(18, 18, 18)
-                        .addComponent(delete_btn)
-                        .addGap(18, 18, 18)
-                        .addComponent(logout_btn))
+                        .addGap(122, 122, 122)
+                        .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(add_btn)
+                    .addComponent(update_btn)
+                    .addComponent(delete_btn)
+                    .addComponent(logout_btn))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void add_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_btnActionPerformed
-        // TODO add your handling code here:
+            String user = txt_username.getText();
+            String pass = txt_password.getText();
+            
+            if (user.isEmpty()|| pass.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Please fill in all fields");
+                return;
+            }
+            try{
+                java.sql.Connection conn = DBConnection.getConnection();
+                String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, user);
+                pst.setString(2, pass);
+                
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(this, "User Added Successfully!");
+                
+                loadTableData();
+                
+                txt_username.setText("");
+                txt_password.setText("");
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
     }//GEN-LAST:event_add_btnActionPerformed
 
     private void update_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_btnActionPerformed
-        // TODO add your handling code here:
+            int row = userTable.getSelectedRow();
+            
+            if (row == -1){
+                JOptionPane.showMessageDialog(this, "Please select a user from the table first!");
+                return;
+            }
+            String id = userTable.getValueAt(row, 0).toString();
+            String newUser = txt_username.getText();
+            String newPass = txt_password.getText();
+            
+            if (newUser.isEmpty()|| newPass.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Type the new username/password in the text fields first!");
+                return;
+            }
+            try{
+                java.sql.Connection conn = DBConnection.getConnection();
+                String sql = "UPDATE users SET username = ?, password = ? WHERE id = ?";
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                
+                pst.setString(1, newUser);                
+                pst.setString(2, newPass);                
+                pst.setString(3, id);
+                
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(this, "User Updated!");
+                
+                loadTableData();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
     }//GEN-LAST:event_update_btnActionPerformed
 
     private void delete_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btnActionPerformed
@@ -154,6 +234,23 @@ public class Dashboard extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_delete_btnActionPerformed
+
+    private void logout_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout_btnActionPerformed
+        new LoginForm().setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_logout_btnActionPerformed
+
+    private void txt_usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_usernameActionPerformed
+
+    private void userTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTableMouseClicked
+        int row = userTable.getSelectedRow();
+        
+        txt_username.setText(userTable.getValueAt(row, 1).toString());
+        txt_password.setText(userTable.getValueAt(row, 2).toString());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userTableMouseClicked
     private void loadTableData(){
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
         model.setRowCount(0);
@@ -206,6 +303,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logout_btn;
+    private javax.swing.JTextField txt_password;
+    private javax.swing.JTextField txt_username;
     private javax.swing.JButton update_btn;
     private javax.swing.JTable userTable;
     private javax.swing.JLabel welcome_lbl;
