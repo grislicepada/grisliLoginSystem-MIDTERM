@@ -21,6 +21,7 @@ public class Dashboard extends javax.swing.JFrame {
         loadTableData();
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(new java.awt.Color(34,34,34));
+        userTable.setRowHeight(30);
     }
 
     /**
@@ -55,6 +56,11 @@ public class Dashboard extends javax.swing.JFrame {
         welcome_lbl.setMaximumSize(new java.awt.Dimension(70, 30));
 
         add_btn.setText("Add");
+        add_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                add_btnMouseEntered(evt);
+            }
+        });
         add_btn.addActionListener(this::add_btnActionPerformed);
 
         update_btn.setText("Update");
@@ -65,6 +71,12 @@ public class Dashboard extends javax.swing.JFrame {
 
         logout_btn.setText("Logout");
         logout_btn.addActionListener(this::logout_btnActionPerformed);
+
+        jScrollPane2.setBackground(new java.awt.Color(45, 45, 45));
+        jScrollPane2.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setFocusTraversalPolicyProvider(true);
+
+        jScrollPane1.setBackground(new java.awt.Color(34, 34, 34));
 
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,22 +114,21 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txt_username, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                             .addComponent(txt_password))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(add_btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(update_btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(delete_btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(logout_btn))))
+                        .addGap(26, 26, 26)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(201, 201, 201)
-                        .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(89, Short.MAX_VALUE))
+                        .addGap(190, 190, 190)
+                        .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(192, 192, 192)
+                        .addComponent(add_btn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(update_btn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(delete_btn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(logout_btn)))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,6 +262,10 @@ public class Dashboard extends javax.swing.JFrame {
         txt_password.setText(userTable.getValueAt(row, 2).toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_userTableMouseClicked
+
+    private void add_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_btnMouseEntered
+               // TODO add your handling code here:
+    }//GEN-LAST:event_add_btnMouseEntered
     private void loadTableData(){
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
         model.setRowCount(0);
