@@ -87,30 +87,39 @@ public class RegisterForm extends javax.swing.JFrame {
     }//GEN-LAST:event_userName_fldActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-       String user = userName_fld.getText();
-       String pass = new String(pass_fld.getPassword());
+        String user = userName_fld.getText();
+        String pass = new String(pass_fld.getPassword());
+    
+    if (user.isEmpty() || pass.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill all fields!");
+        return;
+    }
+    
+    try {
+        Connection conn = DBConnection.getConnection(); // Changed to 'conn' to match your instructor
+        String sql = "INSERT INTO users (username, password) VALUES(?, ?)";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        
+        pst.setString(1, user);
+        pst.setString(2, pass); 
+        
+        pst.executeUpdate();
+        
+        JOptionPane.showMessageDialog(this, "Registration Successful!");
+        
+        new LoginForm().setVisible(true);
+        this.dispose();
+        // Clear fields for the next entry
+        userName_fld.setText("");
+        pass_fld.setText("");
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        e.printStackTrace();
+    
+}
+      
        
-       if (user.isEmpty()|| pass.isEmpty()){
-           JOptionPane.showMessageDialog(this, "Please fill all fields!");
-           return;
-       }
-       try{
-           Connection con = DBConnection.getConnection();
-           String sql = "INSERT INTO users (username, password) VALUES(?, ?)";
-           PreparedStatement pst = con.prepareStatement(sql);
-           
-           pst.setString(1, user);
-           pst.setString(2, pass);
-           
-           pst.executeUpdate();
-           
-           JOptionPane.showMessageDialog(this, "Registration Successful!");
-           
-           userName_fld.setText("");
-           pass_fld.setText("");
-       } catch (Exception e){
-           JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-       }
 // TODO add your handling code here:
     }//GEN-LAST:event_registerBtnActionPerformed
 

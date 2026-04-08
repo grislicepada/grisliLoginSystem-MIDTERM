@@ -46,6 +46,7 @@ public class LoginForm extends javax.swing.JFrame {
         login_btn.addActionListener(this::login_btnActionPerformed);
 
         register_btn.setText("Register");
+        register_btn.addActionListener(this::register_btnActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,12 +61,9 @@ public class LoginForm extends javax.swing.JFrame {
                             .addComponent(password_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(username_fld, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(106, 106, 106))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(password_fld, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))
+                            .addComponent(username_fld, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(password_fld, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(106, 106, 106))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(register_btn)
@@ -94,38 +92,50 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_btnActionPerformed
-        Dashboard dashboard = new Dashboard();
-        
+                                           
+    String user = username_fld.getText();
+    String pass = new String(password_fld.getPassword());
+
+    if (user.isEmpty() || pass.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter both username and password");
+        return;
+    }
+
+    try {
         Connection conn = DBConnection.getConnection();
+        String sql = "SELECT * FROM users WHERE username=? AND password=?";
+        PreparedStatement pst = conn.prepareStatement(sql);
         
-        try{
-            String sql = "SELECT * FROM users WHERE username=? AND password=?";
-            PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, user);
+        pst.setString(2, pass);
+        
+        ResultSet rs = pst.executeQuery();
+        
+        if (rs.next()) {
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to login?", "Confirm", JOptionPane.YES_NO_OPTION);
             
-            String user = username_fld.getText();
-            String pass = new String (password_fld.getPassword());
-            
-            pst.setString(1, user);
-            pst.setString(2, pass);
-            
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()){
-                
-                int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to login?");
-                
-                if (confirm == JOptionPane.YES_OPTION){
-                    dashboard.setVisible(true);
-                    dispose();
-                }
-            
-            }else{
-                JOptionPane.showMessageDialog(null, "Incorrect Credentials");
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Move Dashboard here so it only opens on success
+                Dashboard dashboard = new Dashboard();
+                dashboard.setVisible(true);
+                this.dispose(); 
             }
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error: "+ e.getMessage());
+        } else {
+            JOptionPane.showMessageDialog(this, "Incorrect Credentials");
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        e.printStackTrace();
+    }
+
     }//GEN-LAST:event_login_btnActionPerformed
+
+    private void register_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_register_btnActionPerformed
+        RegisterForm register = new RegisterForm();
+        register.setVisible(true);
+        this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_register_btnActionPerformed
 
     /**
      * @param args the command line arguments
