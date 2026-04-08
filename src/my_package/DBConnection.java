@@ -9,8 +9,8 @@ public class DBConnection {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/login_system", "root", "");
             return con;
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace(); // This will print the EXACT error in the bottom window
             return null;
-        }
+    }
     }
 }

@@ -36,7 +36,12 @@ public class Dashboard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        welcome_lbl.setBackground(new java.awt.Color(0, 255, 255));
+        welcome_lbl.setFont(new java.awt.Font("Engravers MT", 2, 36)); // NOI18N
+        welcome_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         welcome_lbl.setText("WELCOME!");
+        welcome_lbl.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        welcome_lbl.setMaximumSize(new java.awt.Dimension(70, 30));
 
         add_btn.setText("Add");
         add_btn.addActionListener(this::add_btnActionPerformed);
@@ -52,22 +57,25 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(102, Short.MAX_VALUE)
+                .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
-                .addGap(147, 147, 147)
+                .addGap(180, 180, 180)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(logout_btn)
                     .addComponent(delete_btn)
                     .addComponent(update_btn)
-                    .addComponent(add_btn)
-                    .addComponent(welcome_lbl))
-                .addContainerGap(181, Short.MAX_VALUE))
+                    .addComponent(add_btn))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(welcome_lbl)
-                .addGap(45, 45, 45)
+                .addGap(32, 32, 32)
+                .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
                 .addComponent(add_btn)
                 .addGap(18, 18, 18)
                 .addComponent(update_btn)
@@ -75,7 +83,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(delete_btn)
                 .addGap(18, 18, 18)
                 .addComponent(logout_btn)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         pack();

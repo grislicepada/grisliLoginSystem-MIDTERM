@@ -100,7 +100,7 @@ public class RegisterForm extends javax.swing.JFrame {
            PreparedStatement pst = con.prepareStatement(sql);
            
            pst.setString(1, user);
-           pst.setString(2, user);
+           pst.setString(2, pass);
            
            pst.executeUpdate();
            
