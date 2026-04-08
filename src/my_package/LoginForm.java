@@ -4,10 +4,10 @@
  */
 package my_package;
 
-/**
- *
- * @author Acer
- */
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 public class LoginForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginForm.class.getName());
@@ -17,6 +17,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -93,7 +94,37 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_btnActionPerformed
-        // TODO add your handling code here:
+        Dashboard dashboard = new Dashboard();
+        
+        Connection conn = DBConnection.getConnection();
+        
+        try{
+            String sql = "SELECT * FROM users WHERE username=? AND password=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            
+            String user = username_fld.getText();
+            String pass = new String (password_fld.getPassword());
+            
+            pst.setString(1, user);
+            pst.setString(2, pass);
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()){
+                
+                int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to login?");
+                
+                if (confirm == JOptionPane.YES_OPTION){
+                    dashboard.setVisible(true);
+                    dispose();
+                }
+            
+            }else{
+                JOptionPane.showMessageDialog(null, "Incorrect Credentials");
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error: "+ e.getMessage());
+        }
     }//GEN-LAST:event_login_btnActionPerformed
 
     /**
