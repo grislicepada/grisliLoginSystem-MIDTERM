@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my_package;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -17,6 +18,7 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         initComponents();
+        loadTableData();
     }
 
     /**
@@ -53,6 +55,7 @@ public class Dashboard extends javax.swing.JFrame {
         update_btn.addActionListener(this::update_btnActionPerformed);
 
         delete_btn.setText("Delete");
+        delete_btn.addActionListener(this::delete_btnActionPerformed);
 
         logout_btn.setText("Logout");
 
@@ -121,6 +124,36 @@ public class Dashboard extends javax.swing.JFrame {
     private void update_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_btnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_update_btnActionPerformed
+
+    private void delete_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btnActionPerformed
+        int row = userTable.getSelectedRow();
+        
+        if (row == -1){
+            JOptionPane.showMessageDialog(this, "Please select a user from the table first!");
+            return;
+        }
+        
+        String id = userTable.getValueAt(row, 0).toString();
+        
+        int confirm = JOptionPane.showConfirmDialog(this, "Delete this user?", "Confirm", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION){
+            try{
+                java.sql.Connection conn = DBConnection.getConnection();
+                String sql = "DELETE FROM users WHERE id = ?";
+                
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, id);
+                pst.executeUpdate();
+                
+                JOptionPane.showMessageDialog(this, "User Deleted!");
+                loadTableData();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_delete_btnActionPerformed
     private void loadTableData(){
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
         model.setRowCount(0);
