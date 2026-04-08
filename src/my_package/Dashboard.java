@@ -22,6 +22,20 @@ public class Dashboard extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(new java.awt.Color(34,34,34));
         userTable.setRowHeight(30);
+        userTable.getTableHeader().setBackground(new java.awt.Color(60, 60, 60));
+        userTable.getTableHeader().setForeground(java.awt.Color.WHITE);
+        userTable.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+      // 1. Set the Table Background to a lighter gray
+        userTable.setBackground(new java.awt.Color(200, 200, 200)); // Light gray
+        userTable.setForeground(java.awt.Color.BLACK);            // Black text
+
+        // 2. Adjust the Viewport to match the new lighter gray
+        jScrollPane2.getViewport().setBackground(new java.awt.Color(200, 200, 200));
+        jScrollPane1.getViewport().setBackground(new java.awt.Color(200, 200, 200));
+
+        // 3. Make the Header match or stay dark for contrast
+        userTable.getTableHeader().setBackground(new java.awt.Color(150, 150, 150));
+        userTable.getTableHeader().setForeground(java.awt.Color.BLACK);
     }
 
     /**
@@ -41,11 +55,14 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         txt_username = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         txt_password = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(34, 34, 34));
+        setBackground(new java.awt.Color(45, 45, 45));
 
         welcome_lbl.setBackground(new java.awt.Color(0, 255, 255));
         welcome_lbl.setFont(new java.awt.Font("Trebuchet MS", 1, 48)); // NOI18N
@@ -55,6 +72,8 @@ public class Dashboard extends javax.swing.JFrame {
         welcome_lbl.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         welcome_lbl.setMaximumSize(new java.awt.Dimension(70, 30));
 
+        add_btn.setBackground(new java.awt.Color(46, 39, 87));
+        add_btn.setForeground(new java.awt.Color(255, 255, 255));
         add_btn.setText("Add");
         add_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -63,17 +82,23 @@ public class Dashboard extends javax.swing.JFrame {
         });
         add_btn.addActionListener(this::add_btnActionPerformed);
 
+        update_btn.setBackground(new java.awt.Color(0, 102, 204));
+        update_btn.setForeground(new java.awt.Color(255, 255, 255));
         update_btn.setText("Update");
         update_btn.addActionListener(this::update_btnActionPerformed);
 
+        delete_btn.setBackground(new java.awt.Color(153, 0, 0));
+        delete_btn.setForeground(new java.awt.Color(255, 255, 255));
         delete_btn.setText("Delete");
         delete_btn.addActionListener(this::delete_btnActionPerformed);
 
+        logout_btn.setBackground(new java.awt.Color(102, 102, 102));
+        logout_btn.setForeground(new java.awt.Color(255, 255, 255));
         logout_btn.setText("Logout");
         logout_btn.addActionListener(this::logout_btnActionPerformed);
 
         jScrollPane2.setBackground(new java.awt.Color(45, 45, 45));
-        jScrollPane2.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setForeground(new java.awt.Color(51, 51, 51));
         jScrollPane2.setFocusTraversalPolicyProvider(true);
 
         jScrollPane1.setBackground(new java.awt.Color(34, 34, 34));
@@ -101,26 +126,64 @@ public class Dashboard extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jScrollPane1);
 
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLabel1.setForeground(new java.awt.Color(204, 255, 255));
+        jLabel1.setText("Username:");
+
+        txt_username.setBackground(new java.awt.Color(60, 60, 60));
+        txt_username.setForeground(new java.awt.Color(255, 255, 255));
         txt_username.addActionListener(this::txt_usernameActionPerformed);
+
+        jLabel2.setForeground(new java.awt.Color(204, 255, 255));
+        jLabel2.setText("Password:");
+
+        txt_password.setBackground(new java.awt.Color(60, 60, 60));
+        txt_password.setForeground(new java.awt.Color(255, 255, 255));
+        txt_password.addActionListener(this::txt_passwordActionPerformed);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txt_password)
+                        .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(124, 124, 124)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(4, 4, 4)
+                .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_username, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                            .addComponent(txt_password))
-                        .addGap(26, 26, 26)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
+                        .addGap(55, 55, 55)
                         .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(192, 192, 192)
+                        .addGap(54, 54, 54)
                         .addComponent(add_btn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(update_btn)
@@ -128,22 +191,15 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(delete_btn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(logout_btn)))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(122, 122, 122)
-                        .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32)
+                .addComponent(welcome_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(add_btn)
@@ -151,6 +207,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(delete_btn)
                     .addComponent(logout_btn))
                 .addContainerGap(45, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -266,6 +323,10 @@ public class Dashboard extends javax.swing.JFrame {
     private void add_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_btnMouseEntered
                // TODO add your handling code here:
     }//GEN-LAST:event_add_btnMouseEntered
+
+    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_passwordActionPerformed
     private void loadTableData(){
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
         model.setRowCount(0);
@@ -315,6 +376,9 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_btn;
     private javax.swing.JButton delete_btn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logout_btn;
